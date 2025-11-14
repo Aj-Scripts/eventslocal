@@ -1,213 +1,182 @@
 # Event Management & Ticket Booking System
+
+A fullstack web application for managing events, booking tickets, and handling payments. Built with React (frontend) and Node.js/Express (backend), featuring AI-powered recommendations, analytics, and seamless user experience.
+
 ## Features
 
-### User Features
-- User registration and login
-- Browse and search events
-- View event details
-- Book tickets for events
-- View personal bookings in user dashboard
-- Forgot password functionality
+- **User Authentication**: Secure login/signup with JWT tokens, password reset, and profile management.
+- **Event Management**: Create, update, delete, and view events with image uploads (Cloudinary integration).
+- **Ticket Booking**: Book tickets with Razorpay payment gateway, generate QR codes and PDF tickets.
+- **AI Recommendations**: Personalized event suggestions using embeddings and machine learning.
+- **Admin Dashboard**: Analytics, user management, revenue reports, and custom CSV/PDF exports.
+- **Responsive Design**: Mobile-friendly UI built with TailwindCSS and React.
+- **Email Notifications**: Automated emails for bookings and password resets.
+- **Search & Filtering**: Advanced search with AI-powered event discovery.
 
-### Admin Features
-- Admin dashboard with analytics (revenue, user growth, etc.)
-- Manage events (view, potentially add/edit in future)
-- View all bookings
+## Tech Stack
 
-### Backend APIs
-- Authentication (register, login, forgot password)
-- Events management (CRUD operations)
-- Bookings management
-- Analytics for admin
+### Frontend
+- **React** (v19) with Vite for fast development
+- **React Router** for navigation
+- **Axios** for API calls
+- **TailwindCSS** for styling
+- **Chart.js** for analytics visualization
+- **Lucide React** for icons
+- **Browser Image Compression** for optimized uploads
+
+### Backend
+- **Node.js** with Express.js
+- **MongoDB** with Mongoose for database
+- **JWT** for authentication
+- **Razorpay** for payments
+- **Cloudinary** for image storage
+- **Nodemailer** for emails
+- **PDFKit** for ticket generation
+- **QRCode** for ticket QR codes
+- **AI Integration**: Google Generative AI and OpenAI for recommendations
+- **Multer** for file uploads
+
+### DevOps
+- **Docker** for containerized deployment
+- **Nodemon** for backend development
+- **ESLint** for code linting
 
 ## Prerequisites
 
-- Node.js (version 14 or higher)
-- MongoDB (running locally or remote connection)
-- npm (comes with Node.js)
+Before running the application, ensure you have the following installed:
+
+- **Node.js** (v22 or higher) - [Download here](https://nodejs.org/)
+- **MongoDB** (local or cloud instance like MongoDB Atlas)
+- **Git** for cloning the repository
+- **Docker** (optional, for containerized deployment)
 
 ## Installation
 
-1. Clone the repository:
-   ```
+1. **Clone the repository**:
+   ```bash
    git clone <repository-url>
-   cd "Event Management - Copy"
+   cd EventTest-Copy
    ```
 
-2. Install backend dependencies:
-   ```
+2. **Install backend dependencies**:
+   ```bash
    cd backend
    npm install
    ```
 
-3. Install frontend dependencies:
-   ```
+3. **Install frontend dependencies**:
+   ```bash
    cd ../frontend
    npm install
+   cd ..
    ```
 
-4. Set up environment variables:
-   - Create a `.env` file in the `backend` directory
-   - Add necessary environment variables (e.g., MongoDB connection string, JWT secret, email service credentials)
+## Environment Setup
 
-    JWT_SECRET=your_jwt_secret_here
-    
-    NODE_ENV=development
-   
-    USE_ETHEREAL=false
-   
-    EMAIL_USER=your email Id
-   
-    EMAIL_PASS=app password from google account
-   
-    MONGO_URI=
-   
-    PORT=5000
+1. **Create environment file** for the backend:
+   - Copy `backend/.env.example` to `backend/.env` (if it exists) or create `backend/.env`
+   - Add the following variables (replace with your actual values):
 
+   ```env
+   # Database
+   MONGO_URI=mongodb://localhost:27017/event-management
 
-## Running the Application
+   # JWT
+   JWT_SECRET=your-super-secret-jwt-key-here
 
-1. Start MongoDB (if running locally):
+   # Email (for notifications)
+   EMAIL_USER=your-email@gmail.com
+   EMAIL_PASS=your-email-password
+
+   # Cloudinary (for image uploads)
+   CLOUDINARY_CLOUD_NAME=your-cloud-name
+   CLOUDINARY_API_KEY=your-api-key
+   CLOUDINARY_API_SECRET=your-api-secret
+
+   # Razorpay (for payments)
+   RAZORPAY_KEY_ID=your-razorpay-key-id
+   RAZORPAY_KEY_SECRET=your-razorpay-key-secret
+
+   # AI Services (optional, for recommendations)
+   GOOGLE_AI_API_KEY=your-google-ai-key
+   OPENAI_API_KEY=your-openai-key
+
+   # Frontend URL (for CORS)
+   FRONTEND_URL=http://localhost:5173
+
+   # Port
+   PORT=5000
    ```
-   ```
 
-   
+   **Note**: Never commit `.env` files to version control. Add `backend/.env` to `.gitignore`.
 
-2. Seed the database with sample data:
-   ```
-   cd backend
-   node scripts/seed.js
-   ```
-
-3. Start the backend server:
-   ```
-   npm run dev or node server.js
-   ```
-   The backend will run on `http://localhost:5000` (or configured port).
-
-4. Start the frontend development server:
-   ```
-   cd ../frontend
-   npm run dev
-   ```
-   The frontend will run on `http://localhost:5173` (or configured port).
-
-## Manual Testing Guide
-
-### Backend API Testing
-
-Use Postman to test the APIs.
-
-#### Authentication
-- **Register**: POST `/api/auth/register`
-  - Body: `{ "name": "Test User", "email": "test@example.com", "password": "password123" }`
-- **Login**: POST `/api/auth/login`
-  - Body: `{ "email": "test@example.com", "password": "password123" }`
-- **Forgot Password**: POST `/api/auth/forgot-password`
-  - Body: `{ "email": "test@example.com" }`
-
-#### Events
-- **Get All Events**: GET `/api/events`
-- **Get Event by ID**: GET `/api/events/:id`
-- **Create Event** (admin): POST `/api/events` (requires auth token)
-- **Update Event** (admin): PUT `/api/events/:id`
-- **Delete Event** (admin): DELETE `/api/events/:id`
-
-#### Bookings
-- **Create Booking**: POST `/api/bookings`
-  - Headers: `Authorization: Bearer <token>`
-  - Body: `{ "eventId": "<event-id>", "tickets": 2 }`
-- **Get User Bookings**: GET `/api/bookings`
-  - Headers: `Authorization: Bearer <token>`
-
-#### Analytics (Admin)
-- **Get Analytics Data**: GET `/api/analytics`
-  - Headers: `Authorization: Bearer <admin-token>`
-
-### Frontend Manual Testing
-
-1. **Home Page**: Visit the home page, check hero section, navigation.
-
-2. **User Registration**:
-   - Click "Register" or "Sign Up"
-   - Fill in name, email, password
-   - Submit and verify account creation
-
-3. **User Login**:
-   - Click "Login"
-   - Enter credentials
-   - Verify successful login and redirection
-
-4. **Browse Events**:
-   - Navigate to Events page
-   - Check event cards display correctly
-   - Use search/filter if available
-
-5. **Event Details**:
-   - Click on an event card
-   - Verify details page shows event info, image, description
-   - Check booking modal opens
-
-6. **Book Tickets**:
-   - From event details, open booking modal
-   - Select number of tickets
-   - Confirm booking
-   - Verify booking appears in user dashboard
-
-7. **User Dashboard**:
-   - Login as user
-   - Navigate to dashboard
-   - Check personal bookings are listed
-   - Verify booking details (event, tickets, date)
-
-8. **Admin Dashboard**:
-   - Login as admin (use seeded admin account or create one)
-   - Check analytics charts (revenue, user growth)
-   - Verify data accuracy
-
-9. **Forgot Password**:
-   - Click "Forgot Password"
-   - Enter email
-   - Check email is sent (verify in backend logs or email service)
-
-10. **Responsive Design**:
-    - Test on different screen sizes
-    - Check mobile navigation, layouts
-
-11. **Error Handling**:
-    - Try invalid login
-    - Attempt booking without login
-    - Check validation messages
-
-## Sample Data
-
-After running `npm run seed`, the database will be populated with:
-- Sample users (including admin)
-- Sample events with images
-- Sample bookings
-
-Admin credentials (from seed):
-- Email: admin@example.com
-- Password: admin123
-
-
-
-### Frontend
-- React 19
-- Vite
-- Tailwind CSS
-- Chart.js for analytics
-- Lucide React for icons
+## Running Locally
 
 ### Backend
-- Node.js
-- Express.js
-- MongoDB with Mongoose
-- JWT for authentication
-- Multer for file uploads
-- Nodemailer for emails
-- PDFKit for ticket generation
+1. Ensure MongoDB is running locally or update `MONGO_URI` for cloud DB.
+2. Start the backend server:
+   ```bash
+   cd backend
+   npm run dev
+   ```
+   - Server will run on `http://localhost:5000`
+   - API endpoints available at `http://localhost:5000/api/*`
 
+### Frontend
+1. In a new terminal, start the frontend:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+   - Frontend will run on `http://localhost:5173`
+   - It proxies API calls to the backend automatically.
 
+2. Open your browser and navigate to `http://localhost:5173` to access the application.
 
+### Seeding the Database
+To populate the database with sample data:
+```bash
+cd backend
+npm run seed
+```
 
+## Running with Docker
+
+For production deployment or easy setup:
+
+1. **Build and run the Docker container**:
+   ```bash
+   docker build -t event-management-app .
+   docker run -p 5000:5000 --env-file backend/.env event-management-app
+   ```
+
+2. Access the application at `http://localhost:5000` (frontend served by backend).
+
+**Note**: Ensure all environment variables are set in `backend/.env` before building.
+
+## API Overview
+
+The backend provides RESTful APIs for:
+
+- **Authentication** (`/api/auth`): Login, signup, profile management
+- **Events** (`/api/events`): CRUD operations for events
+- **Bookings** (`/api/bookings`): Ticket booking and management
+- **Analytics** (`/api/analytics`): Admin reports and user management
+- **Payments** (`/api/payment`): Razorpay integration
+- **Recommendations** (`/api/recommendations`): AI-powered event suggestions
+
+Refer to `frontend/src/services/api.js` for frontend API integration examples.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit changes: `git commit -m 'Add some feature'`
+4. Push to branch: `git push origin feature/your-feature-name`
+5. Open a pull request.
+
+## License
+
+This project is licensed under the ISC License.
+
+---

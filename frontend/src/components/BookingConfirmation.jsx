@@ -3,7 +3,7 @@ import { Calendar, MapPin, Clock, Download, Check, ArrowRight, Ticket, Hash, Spa
 import QRCode from 'qrcode';
 import { bookingsAPI, eventsAPI } from '../services/api';
 
-const BookingConfirmation = ({ bookingData }) => {
+const BookingConfirmation = ({ bookingData, setCurrentView }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [downloading, setDownloading] = useState(false);
   const [currentBookingData, setCurrentBookingData] = useState(bookingData);
@@ -266,7 +266,7 @@ const BookingConfirmation = ({ bookingData }) => {
             </button>
 
             <button
-              onClick={() => window.location.href = '/dashboard'}
+              onClick={() => setCurrentView('dashboard')}
               className="btn-secondary flex items-center gap-3 px-6 py-3 rounded-xl font-bold"
             >
               Go to My Bookings
