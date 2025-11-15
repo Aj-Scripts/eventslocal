@@ -20,7 +20,7 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ FRONTEND ORIGIN CONFIG (allow local + Docker + dev)
+// ✅ FRONTEND ORIGIN CONFIG (allow local + Docker + dev + Vercel)
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:8080', // Docker frontend
   'http://localhost:5173', // Vite default port
@@ -28,7 +28,8 @@ const allowedOrigins = [
   'http://127.0.0.1:8080',
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5000', // Same origin (if full-stack in one container)
-  'https://eventsapp-bjhyb7hje9a7fze3.canadacentral-01.azurewebsites.net' // ✅ your deployed frontend
+  'https://eventsapp-bjhyb7hje9a7fze3.canadacentral-01.azurewebsites.net', // ✅ your deployed frontend
+  'https://your-vercel-app.vercel.app' // ✅ Add your Vercel domain here (replace with actual)
 ];
 
 
@@ -71,13 +72,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-// ✅ Serve React frontend (for Docker / production build)
-const __dirname1 = path.resolve();
-app.use(express.static(path.join(__dirname1, 'public')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname1, 'public', 'index.html'));
-});
+// Note: Frontend is now served separately on Vercel. Remove static serving for API-only deployment.
 
 // ✅ Start server
 app.listen(PORT, () => {
