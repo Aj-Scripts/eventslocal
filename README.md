@@ -140,65 +140,7 @@ cd backend
 npm run seed
 ```
 
-## Deployment
-
-### Option 1: Vercel (Frontend) + Render (Backend)
-
-This setup separates the frontend and backend for better scalability and performance.
-
-#### Deploy Backend to Render
-
-1. **Create a Render account** and connect your GitHub repository.
-
-2. **Create a new Web Service**:
-   - Select your repository.
-   - Set **Runtime** to `Node`.
-   - Set **Build Command** to `npm install`.
-   - Set **Start Command** to `npm start`.
-   - Set **Environment** to `Production`.
-
-3. **Add Environment Variables** in Render dashboard:
-   ```
-   MONGO_URI=mongodb+srv://your-mongo-atlas-connection-string
-   JWT_SECRET=your-super-secret-jwt-key-here
-   EMAIL_USER=your-email@gmail.com
-   EMAIL_PASS=your-email-password
-   CLOUDINARY_CLOUD_NAME=your-cloud-name
-   CLOUDINARY_API_KEY=your-api-key
-   CLOUDINARY_API_SECRET=your-api-secret
-   RAZORPAY_KEY_ID=your-razorpay-key-id
-   RAZORPAY_KEY_SECRET=your-razorpay-key-secret
-   GOOGLE_AI_API_KEY=your-google-ai-key
-   OPENAI_API_KEY=your-openai-key
-   FRONTEND_URL=https://your-vercel-app.vercel.app
-   PORT=10000
-   ```
-
-4. **Deploy** the backend. Note the deployed URL (e.g., `https://your-backend.onrender.com`).
-
-#### Deploy Frontend to Vercel
-
-1. **Create a Vercel account** and connect your GitHub repository.
-
-2. **Deploy the frontend**:
-   - Import your repository.
-   - Set **Framework Preset** to `Vite`.
-   - Set **Root Directory** to `frontend`.
-
-3. **Add Environment Variables** in Vercel dashboard:
-   ```
-   REACT_APP_API_BASE_URL=https://your-backend.onrender.com/api
-   ```
-
-4. **Update Backend CORS**:
-   - In `backend/server.js`, replace `'https://your-vercel-app.vercel.app'` with your actual Vercel domain.
-   - Redeploy the backend on Render.
-
-5. **Redeploy** the frontend on Vercel.
-
-**Note**: Ensure the backend URL in `REACT_APP_API_BASE_URL` matches your Render deployment URL.
-
-### Option 2: Docker (Full-Stack)
+## Running with Docker
 
 For production deployment or easy setup:
 
